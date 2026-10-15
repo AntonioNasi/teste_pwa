@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Editorial - Olá Mundo!</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        papiro: '#f4f1ea',
+                        grafite: '#1A1D1A',
+                        mughal: '#296330',
+                        carmim: '#B21F1F',
+                        ouro: '#F6C81D',
+                        pergaminho: '#e8e3d5'
+                    },
+                    fontFamily: {
+                        serif: ['Georgia', 'Cambria', 'serif'],
+                        sans: ['system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Dynamic Manifest Generation via Data URL -->
+    <script id="manifest-injector">
+        const manifestData = {
+            "name": "PWA Editorial Olá Mundo",
+            "short_name": "NutriPWA",
+            "start_url": "./",
+            "display": "standalone",
+            "background_color": "#f4f1ea",
+            "theme_color": "#296330",
+            "icons": [
+                {
+                    "src": "https://placehold.co/192x192/296330/f4f1ea?text=PWA",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                },
+                {
+                    "src": "https://placehold.co/512x512/296330/f4f1ea?text=PWA",
+                    "sizes": "512x512",
+                    "type": "image/png"
+                }
+            ]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+        const manifestUrl = URL.createObjectURL(manifestBlob);
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = manifestUrl;
+        document.head.appendChild(link);
+    </script>
+    <meta name="theme-color" content="#296330">
+    <style>
+        body {
+            background-color: #f4f1ea;
+            color: #1A1D1A;
+        }
+        .texture-paper {
+            background-image: radial-gradient(#296330 0.4px, transparent 0.4px), radial-gradient(#1A1D1A 0.4px, #f4f1ea 0.4px);
+            background-size: 16px 16px;
+            background-position: 0 0, 8px 8px;
+            background-opacity: 0.03;
+        }
+    </style>
+</head>
+<body class="font-serif min-h-screen flex flex-col justify-between p-4 sm:p-8 texture-paper border-t-8 border-mughal">
+
+    <!-- Header / Navbar -->
+    <header class="max-w-3xl w-full mx-auto flex justify-between items-center pb-6 border-b border-stone-300">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-full bg-mughal flex items-center justify-center text-papiro font-bold text-sm">
+                PW
+            </div>
+            <span class="text-xs uppercase tracking-widest font-sans font-semibold text-stone-600">
+                PWA Manifesto &bull; Edição I
+            </span>
+        </div>
+        
+        <!-- Status de Conexão -->
+        <div id="status-badge" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-sans font-medium bg-emerald-100 text-emerald-800 border border-emerald-300 transition-all duration-300">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse" id="status-dot"></span>
+            <span id="status-text">Online</span>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="max-w-2xl w-full mx-auto my-auto py-12 text-center">
+        <span class="text-sm font-sans uppercase tracking-widest text-mughal font-bold">Início Rápido</span>
+        <h1 class="text-4xl sm:text-5xl font-serif font-bold text-grafite mt-2 mb-4 leading-tight">
+            Olá, Mundo PWA!
+        </h1>
+        <p class="text-stone-700 text-lg leading-relaxed mb-8 max-w-xl mx-auto font-serif">
+            Este é um modelo funcional e autônomo de <strong class="text-mughal">Progressive Web App</strong>. Ele foi configurado com Manifesto dinâmico e Service Worker embutido para teste imediato.
+        </p>
+
+        <!-- Ações do PWA -->
+        <div class="space-y-4">
+            <button id="install-btn" class="hidden mx-auto inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-sans font-medium rounded-md text-papiro bg-mughal hover:bg-emerald-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-mughal shadow-md transition-all">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
+                Instalar App na Tela Inicial
+            </button>
+
+            <div id="installed-msg" class="hidden p-4 rounded-md bg-stone-200/60 text-stone-800 text-sm font-sans border border-stone-300 max-w-md mx-auto">
+                ✨ <strong>App Instalado!</strong> Você está rodando este PWA diretamente da sua área de trabalho ou tela inicial.
+            </div>
+        </div>
+
+        <!-- Cards de Recursos -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12 text-left font-sans text-xs">
+            <div class="p-4 bg-pergaminho/50 rounded border border-stone-300">
+                <div class="font-bold text-grafite mb-1 uppercase tracking-wider">Service Worker</div>
+                <p class="text-stone-600">Simulado dinamicamente via Blob URL para funcionamento no Preview.</p>
+            </div>
+            <div class="p-4 bg-pergaminho/50 rounded border border-stone-300">
+                <div class="font-bold text-grafite mb-1 uppercase tracking-wider">Manifest.json</div>
+                <p class="text-stone-600">Injetado automaticamente no cabeçalho com metadados de instalação.</p>
+            </div>
+            <div class="p-4 bg-pergaminho/50 rounded border border-stone-300">
+                <div class="font-bold text-grafite mb-1 uppercase tracking-wider">Offline First</div>
+                <p class="text-stone-600">Pronto para responder a eventos de queda de conexão em tempo real.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="max-w-3xl w-full mx-auto pt-6 border-t border-stone-300 text-center font-sans text-xs text-stone-500">
+        <p>Estrutura PWA &bull; Arquitetura leve e sem dependências de framework build.</p>
+    </footer>
+
+    <!-- Scripts da Aplicação & Service Worker In-line -->
+    <script>
+        // 1. Gerenciamento do Status Online / Offline
+        const statusBadge = document.getElementById('status-badge');
+        const statusDot = document.getElementById('status-dot');
+        const statusText = document.getElementById('status-text');
+
+        function updateOnlineStatus() {
+            if (navigator.onLine) {
+                statusText.textContent = 'Online';
+                statusBadge.className = 'inline-flex items-center px-3 py-1 rounded-full text-xs font-sans font-medium bg-emerald-100 text-emerald-800 border border-emerald-300 transition-all duration-300';
+                statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse';
+            } else {
+                statusText.textContent = 'Offline';
+                statusBadge.className = 'inline-flex items-center px-3 py-1 rounded-full text-xs font-sans font-medium bg-red-100 text-carmim border border-red-300 transition-all duration-300';
+                statusDot.className = 'w-2 h-2 rounded-full bg-carmim mr-2';
+            }
+        }
+
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        updateOnlineStatus();
+
+        // 2. Evento de Instalação do PWA
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+        const installedMsg = document.getElementById('installed-msg');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Previne a barra automática do Chrome
+            e.preventDefault();
+            deferredPrompt = e;
+            // Exibe o botão customizado
+            installBtn.classList.remove('hidden');
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                installBtn.classList.add('hidden');
+            }
+            deferredPrompt = null;
+        });
+
+        window.addEventListener('appinstalled', () => {
+            installBtn.classList.add('hidden');
+            installedMsg.classList.remove('hidden');
+        });
+
+        // 3. Registro Dinâmico do Service Worker via Blob (Permite rodar inline em previews)
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                const CACHE_NAME = 'pwa-ola-mundo-v1';
+                self.addEventListener('install', (e) => {
+                    self.skipWaiting();
+                });
+                self.addEventListener('activate', (e) => {
+                    e.waitUntil(clients.claim());
+                });
+                self.addEventListener('fetch', (e) => {
+                    // Estratégia de cache simples
+                    e.respondWith(
+                        fetch(e.request).catch(() => new Response('Você está offline!'))
+                    );
+                });
+            `;
+
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(blob);
+
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register(swUrl)
+                    .then(reg => console.log('Service Worker registrado com sucesso (Blob):', reg.scope))
+                    .catch(err => console.log('Erro ao registrar Service Worker:', err));
+            });
+        }
+    </script>
+</body>
+</html>
